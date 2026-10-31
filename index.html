@@ -438,7 +438,6 @@
     <div class="bg-blob-1"></div>
     <div class="bg-blob-2"></div>
 
-    <!-- Header -->
     <header>
         <div class="logo">Xdnry777</div>
         <div class="header-actions">
@@ -456,19 +455,18 @@
             <p>Kompres foto dan video tanpa penurunan kualitas, serta unduh konten dari TikTok dan Instagram dengan mudah</p>
         </section>
 
-        <!-- Tab Pilihan Fitur -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="compressor">Kompres Status</button>
             <button class="tab-btn" data-tab="downloader">Download Media</button>
         </div>
 
-        <!-- ===== TAB 1: KOMPRES STATUS ===== -->
+        <!-- Tab Kompres Status -->
         <div class="tab-content active" id="compressorTab">
             <div id="uploadWrapper" class="locked-section">
                 <div class="locked-banner">
                     <h3>Silakan Masuk Terlebih Dahulu</h3>
                     <p>Anda harus memiliki akun untuk menggunakan fitur kompresi file</p>
-                    <button class="btn btn-primary" onclick="openAuthPage()">Buat Akun atau Masuk</button>
+                    <button class="btn btn-primary" id="goAuthBtn">Buat Akun atau Masuk</button>
                 </div>
                 
                 <div class="upload-section glass">
@@ -480,14 +478,22 @@
                         <p>Klik area ini atau seret file ke dalam kotak</p>
                         <input type="file" id="fileInput" accept="image/*,video/mp4,video/quicktime">
                     </div>
-                    <div style="margin-top: 20px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn btn-primary" id="processBtn" style="display:none;">Kompres dan Siapkan</button>
-                        <button class="btn btn-secondary" id="resetBtn" style="display:none;">Mulai Ulang</button>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ===== TAB 2: DOWNLOADER SOSMED ===== -->
+        <!-- Tab Download Media -->
         <div class="tab-content" id="downloaderTab">
-            <div id
+            <div class="downloader-section glass">
+                <h3>Download Media dari Sosmed</h3>
+                <p style="color:#94a3b8; margin-bottom:20px;">Tempel tautan di bawah ini</p>
+                
+                <div class="platform-tabs">
+                    <button class="platform-tab active" data-platform="tiktok">TikTok</button>
+                    <button class="platform-tab" data-platform="instagram">Instagram</button>
+                </div>
+                
+                <input type="text" id="linkInput" class="input-box" placeholder="Tempel tautan video atau foto di sini...">
+                <button class="btn btn-primary" id="downloadBtn">Dapatkan Tautan Download</button>
+                
+               
