@@ -5,428 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xdnry777 — Kompres & Downloader</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+        * {margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif;}
+        body {background:linear-gradient(135deg,#0f172a,#1e293b); min-height:100vh; padding:20px; color:white;}
+        .wrap {max-width:480px; margin:0 auto;}
+        h1 {text-align:center; color:#60a5fa; margin:20px 0; font-size:22px;}
+        
+        .tabs {display:flex; gap:10px; margin-bottom:20px;}
+        .tab {flex:1; padding:12px; background:#1e293b; border:none; color:#94a3b8; border-radius:8px; cursor:pointer; font-size:15px;}
+        .tab.aktif {background:#2563eb; color:white;}
+        
+        .card {background:#1e293b; border-radius:12px; padding:25px; box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+        .tab-p {display:none;}
+        .tab-p.aktif {display:block;}
+        
+        /* === KOMPRES FOTO === */
+        .pilih {
+            display:block; width:100%; padding:25px; border:2px dashed #3b82f6; border-radius:8px;
+            text-align:center; cursor:pointer; font-size:17px; color:#93c5fd; margin-bottom:20px;
         }
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #050714 0%, #101b35 50%, #0a1629 100%);
-            color: #fff;
-            position: relative;
+        .pilih:hover {background:#1e3a5f;}
+        input[type="file"] {display:none;}
+        
+        label {display:block; margin:15px 0 6px; color:#cbd5e1; font-size:15px;}
+        input[type="range"] {width:100%; margin-bottom:8px;}
+        
+        button {
+            width:100%; padding:14px; border:none; border-radius:8px; font-size:16px;
+            font-weight:bold; cursor:pointer; transition:0.2s;
         }
-        .bg-blob-1, .bg-blob-2 {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            z-index: 0;
+        button:disabled {opacity:0.4; cursor:not-allowed;}
+        .btn-biru {background:#2563eb; color:white; margin-top:10px;}
+        .btn-biru:hover:not(:disabled) {background:#1d4ed8;}
+        .btn-hijau {background:#16a34a; color:white; margin-top:15px;}
+        .btn-hijau:hover:not(:disabled) {background:#15803d;}
+        
+        .info {background:#0f172a; border-radius:6px; padding:12px; margin-top:15px; font-size:14px; color:#94a3b8;}
+        .info p {margin:5px 0;}
+        .hemat {color:#4ade80; font-weight:bold;}
+        img {max-width:100%; border-radius:8px; margin-top:15px; display:none;}
+        .sembunyi {display:none !important;}
+        
+        /* === DOWNLOAD SOSMED === */
+        .input-link {
+            width:100%; padding:14px; background:#0f172a; border:1px solid #334155;
+            border-radius:8px; color:white; font-size:15px; margin-bottom:15px;
         }
-        .bg-blob-1 {
-            width: 500px;
-            height: 500px;
-            background: #1e5aeb;
-            top: -150px;
-            right: -100px;
-        }
-        .bg-blob-2 {
-            width: 400px;
-            height: 400px;
-            background: #0f38a0;
-            bottom: -100px;
-            left: -100px;
-        }
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #3b82f6, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        header {
-            position: relative;
-            z-index: 10;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: center;
-        }
-        .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-        }
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .btn-success {
-            background: linear-gradient(135deg, #16a34a, #15803d);
-            color: white;
-            margin-top: 15px;
-        }
-        .container {
-            position: relative;
-            z-index: 10;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px 5%;
-        }
-        .hero {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        .hero h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff, #93c5fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            color: #94a3b8;
-        }
-        .section-box {
-            padding: 30px;
-            text-align: center;
-            margin-bottom: 25px;
-            background: rgba(15, 23, 42, 0.55);
-            border: 1px solid rgba(59, 130, 246, 0.18);
-            border-radius: 16px;
-        }
-        .upload-area {
-            border: 2px dashed rgba(59, 130, 246, 0.4);
-            border-radius: 12px;
-            padding: 40px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-        }
-        .upload-area:hover {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.05);
-        }
-        .input-field {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 8px;
-            color: #fff;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            outline: none;
-        }
-        .tabs-nav {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 12px 20px;
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.15);
-            color: #94a3b8;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-        .tab-btn.active {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
-            color: #fff;
-        }
-        .tab-pane {
-            display: none;
-        }
-        .tab-pane.active {
-            display: block;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            display: none;
-            line-height: 1.5;
-        }
-        .message.show {
-            display: block;
-        }
-        .message.info {
-            background: rgba(59, 130, 246, 0.15);
-            color: #93c5fd;
-        }
-        .message.success {
-            background: rgba(34, 197, 94, 0.15);
-            color: #86efac;
-        }
-        .message.error {
-            background: rgba(239, 68, 68, 0.15);
-            color: #fca5a5;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .settings-box {
-            background: rgba(30, 41, 59, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .settings-box h4 {
-            color: #93c5fd;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .setting-row {
-            margin-bottom: 15px;
-        }
-        .setting-row label {
-            display: block;
-            color: #e5e7eb;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-        }
-        .setting-row input[type="range"] {
-            width: 100%;
-            accent-color: #3b82f6;
-        }
-        .setting-row select {
-            width: 100%;
-            padding: 8px 12px;
-            background: rgba(17, 24, 39, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 6px;
-            color: #fff;
-            font-size: 0.9rem;
-        }
-        .info-box {
-            background: rgba(17, 24, 39, 0.5);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 10px 0;
-            text-align: left;
-            font-size: 0.85rem;
-            color: #9ca3af;
-        }
-        .info-box strong {
-            color: #60a5fa;
-        }
-        .preview-img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-        }
-        .size-compare {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        .size-item {
-            background: rgba(30, 41, 59, 0.5);
-            padding: 10px 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .size-item span:first-child {
-            display: block;
-            font-size: 0.8rem;
-            color: #9ca3af;
-        }
-        .size-item span:last-child {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-        }
-        .savings {
-            color: #4ade80 !important;
-            font-weight: bold;
-        }
+        .pesan {margin-top:15px; padding:12px; background:#1e3a5f; border-radius:6px; font-size:14px; line-height:1.6; color:#93c5fd;}
+        .pesan a {color:#60a5fa; text-decoration:none;}
     </style>
 </head>
 <body>
-    <div class="bg-blob-1"></div>
-    <div class="bg-blob-2"></div>
+<div class="wrap">
+    <h1>Xdnry777</h1>
 
-    <header>
-        <div class="logo">Xdnry777</div>
-    </header>
+    <!-- TAB -->
+    <div class="tabs">
+        <button class="tab aktif" data-tab="kompres">📷 Kompres Foto</button>
+        <button class="tab" data-tab="download">📥 Download TT/IG</button>
+    </div>
 
-    <div class="container">
-        <section class="hero">
-            <h1>Kompres Foto & Downloader</h1>
-            <p>Perkecil ukuran foto tanpa banyak hilang kualitas</p>
-        </section>
+    <!-- TAB KOMPRES FOTO -->
+    <div id="kompres" class="tab-p aktif">
+        <div class="card">
+            <label class="pilih" for="fileMasukan">👆 Klik Pilih Foto</label>
+            <input type="file" id="fileMasukan" accept="image/jpeg,image/png,image/jpg">
 
-        <div class="tabs-nav">
-            <button type="button" class="tab-btn active" data-tab="kompres">Kompres Foto</button>
-            <button type="button" class="tab-btn" data-tab="download">Download Media</button>
-        </div>
-
-        <!-- TAB KOMPRES FOTO -->
-        <div class="tab-pane active" id="kompres">
-            <div class="section-box">
-                <h3 style="margin-bottom:15px;">Pilih Foto</h3>
-                <div class="upload-area" id="kotakUnggah">
-                    <p style="font-size:1.1rem; font-weight:500;">👆 Klik di sini untuk pilih foto</p>
-                    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">Format: JPG, PNG, JPEG</p>
-                    <input type="file" id="inputFile" accept="image/*" style="display:none;">
-                </div>
-
-                <!-- PENGATURAN KOMPRES -->
-                <div id="pengaturanBox" class="settings-box hidden">
-                    <h4>⚙️ Pengaturan Kompres</h4>
-                    <div class="setting-row">
-                        <label>Kualitas: <span id="nilaiKualitas">80%</span></label>
-                        <input type="range" id="sliderKualitas" min="10" max="100" value="80">
-                    </div>
-                    <div class="setting-row">
-                        <label>Maksimal Lebar: <span id="nilaiLebar">1920</span>px</label>
-                        <select id="pilihLebar">
-                            <option value="1280">1280 px (HD)</option>
-                            <option value="1920" selected>1920 px (FHD)</option>
-                            <option value="2560">2560 px (2K)</option>
-                            <option value="0">Ukuran Asli</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- HASIL -->
-                <div id="hasilBox" class="hidden">
-                    <div class="size-compare">
-                        <div class="size-item">
-                            <span>Ukuran Asli</span>
-                            <span id="ukuranAsli">—</span>
-                        </div>
-                        <div class="size-item">
-                            <span>Ukuran Setelah</span>
-                            <span id="ukuranHasil">—</span>
-                        </div>
-                        <div class="size-item">
-                            <span>Dihemat</span>
-                            <span id="persenHemat" class="savings">—</span>
-                        </div>
-                    </div>
-                    
-                    <h4 style="margin:15px 0 5px;">Pratinjau Hasil:</h4>
-                    <img id="gambarHasil" class="preview-img" alt="Hasil Kompres">
-                    
-                    <button type="button" class="btn btn-success" id="btnSimpan">💾 Simpan Foto</button>
-                    <p style="font-size:0.8rem; color:#9ca3af; margin-top:8px;">📱 Atau tahan gambar → "Simpan Gambar"</p>
-                </div>
-
-                <div id="pesan" class="message"></div>
+            <div id="pengaturan" class="sembunyi">
+                <label>Kualitas: <span id="nilaiKualitas">80%</span></label>
+                <input type="range" id="rentangKualitas" min="10" max="100" value="80">
+                <button id="tombolKompres" class="btn-biru">🔧 Kompres Sekarang</button>
             </div>
-        </div>
 
-        <!-- TAB DOWNLOAD -->
-        <div class="tab-pane" id="download">
-            <div class="section-box">
-                <h3 style="margin-bottom:15px;">Download Video & Foto</h3>
-                <input type="text" class="input-field" id="inputLink" placeholder="Tempel tautan TikTok / Instagram di sini...">
-                <button type="button" class="btn btn-primary" id="btnDapatkan">🔗 Buka Situs Downloader</button>
-                <div id="msgDownload" class="message info">
-                    💡 Salin tautan video, tempel di atas, lalu klik tombol.<br><br>
-                    • <strong>TikTok</strong> → gunakan snaptik.app<br>
-                    • <strong>Instagram</strong> → gunakan snapinsta.app
-                </div>
+            <div id="kotakInfo" class="info sembunyi">
+                <p>📦 Asli: <span id="ukuranAsli">—</span></p>
+                <p>📦 Hasil: <span id="ukuranHasil">—</span></p>
+                <p>✅ Dihemat: <span id="persenHemat" class="hemat">—</span></p>
             </div>
+
+            <img id="gambarHasil" alt="Hasil Kompres">
+            <button id="tombolSimpan" class="btn-hijau sembunyi">💾 Simpan Foto</button>
         </div>
     </div>
 
-    <script>
-        // === FUNGSI BANTUAN ===
-        function formatUkuran(byte) {
-            if (byte < 1024) return byte + ' B';
-            if (byte < 1024 * 1024) return (byte / 1024).toFixed(1) + ' KB';
-            return (byte / (1024 * 1024)).toFixed(2) + ' MB';
+    <!-- TAB DOWNLOAD SOSMED -->
+    <div id="download" class="tab-p">
+        <div class="card">
+            <h3 style="margin-bottom:15px; font-size:17px;">Download Video & Foto</h3>
+            <input type="text" class="input-link" id="inputLink" placeholder="Tempel tautan TikTok / Instagram di sini...">
+            <button id="tombolBuka" class="btn-biru">🔗 Buka Situs Downloader</button>
+            <div id="kotakPesan" class="pesan">
+                💡 Cara pakai:<br>
+                1. Salin tautan video TikTok/Instagram<br>
+                2. Tempel di kolom di atas<br>
+                3. Klik tombol → akan dibuka situs downloader
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // === GANTI TAB ===
+    const tombolTab = document.querySelectorAll('.tab');
+    const isiTab = document.querySelectorAll('.tab-p');
+    tombolTab.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tombolTab.forEach(b => b.classList.remove('aktif'));
+            isiTab.forEach(p => p.classList.remove('aktif'));
+            btn.classList.add('aktif');
+            document.getElementById(btn.dataset.tab).classList.add('aktif');
+        });
+    });
+
+    // === FUNGSI BANTUAN ===
+    function ubahUkuran(b) {
+        if (b < 1024) return b + ' B';
+        if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+        return (b/1048576).toFixed(2) + ' MB';
+    }
+
+    // === KOMPRES FOTO ===
+    const fileMasukan = document.getElementById('fileMasukan');
+    const pengaturan = document.getElementById('pengaturan');
+    const rentangKualitas = document.getElementById('rentangKualitas');
+    const nilaiKualitas = document.getElementById('nilaiKualitas');
+    const tombolKompres = document.getElementById('tombolKompres');
+    const kotakInfo = document.getElementById('kotakInfo');
+    const ukuranAsli = document.getElementById('ukuranAsli');
+    const ukuranHasil = document.getElementById('ukuranHasil');
+    const persenHemat = document.getElementById('persenHemat');
+    const gambarHasil = document.getElementById('gambarHasil');
+    const tombolSimpan = document.getElementById('tombolSimpan');
+
+    let fileAwal = null;
+    let hasilBlob = null;
+
+    rentangKualitas.addEventListener('input', () => {
+        nilaiKualitas.textContent = rentangKualitas.value + '%';
+    });
+
+    fileMasukan.addEventListener('change', e => {
+        const f = e.target.files[0];
+        if (!f) return;
+        fileAwal = f;
+        pengaturan.classList.remove('sembunyi');
+        kotakInfo.classList.add('sembunyi');
+        gambarHasil.style.display = 'none';
+        tombolSimpan.classList.add('sembunyi');
+        ukuranAsli.textContent = ubahUkuran(f.size);
+    });
+
+    tombolKompres.addEventListener('click', () => {
+        if (!fileAwal) return;
+        tombolKompres.disabled = true;
+        tombolKompres.textContent = '⏳ Memproses...';
+
+        const img = new Image();
+        img.onload = () => {
+            const kanvas = document.createElement('canvas');
+            kanvas.width = img.width;
+            kanvas.height = img.height;
+            const ctx = kanvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            const kualitas = parseInt(rentangKualitas.value) / 100;
+            kanvas.toBlob(b => {
+                if (!b) {
+                    alert('Gagal memproses!');
+                    tombolKompres.disabled = false;
+                    tombolKompres.textContent = '🔧 Kompres Sekarang';
+                    return;
+                }
+                hasilBlob = b;
+                ukuranHasil.textContent = ubahUkuran(b.size);
+                const hemat = Math.round((1 - b.size / fileAwal.size) * 100);
+                persenHemat.textContent = hemat + '%';
+                gambarHasil.src = URL.createObjectURL(b);
+                gambarHasil.style.display = 'block';
+                kotakInfo.classList.remove('sembunyi');
+                tombolSimpan.classList.remove('sembunyi');
+                tombolKompres.disabled = false;
+                tombolKompres.textContent = '🔧 Kompres Sekarang';
+            }, 'image/jpeg', kualitas);
+        };
+        img.src = URL.createObjectURL(fileAwal);
+    });
+
+    tombolSimpan.addEventListener('click', () => {
+        if (!hasilBlob) return;
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(hasilBlob);
+        a.download = 'kompres_' + (fileAwal?.name || 'foto.jpg');
+        a.click();
+    });
+
+    // === DOWNLOAD SOSMED ===
+    const inputLink = document.getElementById('inputLink');
+    const tombolBuka = document.getElementById('tombolBuka');
+    const kotakPesan = document.getElementById('kotakPesan');
+
+    tombolBuka.addEventListener('click', () => {
+        const link = inputLink.value.trim();
+        if (!link) {
+            kotakPesan.innerHTML = '⚠️ Masukkan tautan dulu!';
+            return;
         }
 
-        // === GANTI TAB ===
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        tabButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                tabButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                const tabId = this.getAttribute('data-tab');
-                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-
-        // === KOMPRES FOTO ===
-        const kotakUnggah = document.getElementById('kotakUnggah');
-        const inputFile = document.getElementById('inputFile');
-        const pengaturanBox = document.getElementById('pengaturanBox');
-        const hasilBox = document.getElementById('hasilBox');
-        const pesan = document.getElementById('pesan');
-        const sliderKualitas = document.getElementById('sliderKualitas');
-        const nilaiKualitas = document.getElementById('nilaiKualitas');
-        const pilihLebar = document.getElementById('pilihLebar');
-        const ukuranAsli = document.getElementById('ukuranAsli');
-        const ukuranHasil = document.getElementById('ukuranHasil');
-        const persenHemat = document.getElementById('persenHemat');
-        const gambarHasil = document.getElementById('gambarHasil');
-        const btnSimpan = document.getElementById('btnSimpan');
-
-        let fileAsli = null;
-        let blobHasil = null;
-        let namaFileHasil = '';
-
-        kotakUnggah.addEventListener('click', () => inputFile.click());
-
-        inputFile.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            if (!file.type.startsWith('image/')) {
-                pesan.textContent = '⚠️ Hanya file gambar yang didukung!';
-                pesan.className = 'message error show';
-                return;
-            }
-            
-            fileAsli = file;
-            pesan.classList.remove('show');
-            pengaturanBox.classList.remove('hidden');
-            hasilBox.classList.add('hidden');
-            
-            ukuranAsli.textContent = formatUkuran(file.size);
-            
-            const img = new Image();
-            img.onload = function() {
-                kompresGambar();
-            };
-            img.src = URL.createObjectURL(file);
-        });
-
-        // Update tampilan nilai
-        sliderKualitas.addEventListener('input', function() {
-            nilaiKualitas.textContent = this.value + '%';
-            if (fileAsli) kompresGambar();
-        });
-        pilihLebar.addEventListener('change', function() {
-            nilaiLebar.textContent = this.value;
-            if (fileAsli) kompresGambar();
-        });
-
-        // PROSES KOMPRES
+        if (link.includes('tiktok.com')) {
+            kotakPesan.innerHTML = '✅ TikTok terdeteksi!<br>🔗 Buka → <a href="https://snaptik.app" target="_blank">snaptik.app</a><br>Salin tautan kamu, tempel ke Snaptik untuk unduh tanpa watermark.';
+            window.open('https://snaptik.app', '_blank');
+        } else if (link.includes('instagram.com')) {
+            kotakPesan.innerHTML = '✅ Instagram terdeteksi!<br>🔗 Buka → <a href="https://snapinsta.app" target="_blank">snapinsta.app</a><br>Salin tautan kamu, tempel ke Snapinsta untuk unduh.';
+            window.open('https://snapinsta.app', '_blank');
+        } else {
+            kotakPesan.innerHTML = '⚠️ Tautan tidak dikenali.<br>Gunakan:<br>• TikTok → <a href="https://snaptik.app" target="_blank">snaptik.app</a><br>• Instagram → <a href="https://snapinsta.app" target="_blank">snapinsta.app</a>';
+        }
+    });
+</script>
+</body>
+                                </html>
+                                
