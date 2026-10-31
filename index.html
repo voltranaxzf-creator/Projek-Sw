@@ -38,11 +38,12 @@
             bottom: -100px;
             left: -100px;
         }
-        .glass {
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(59, 130, 246, 0.18);
-            border-radius: 20px;
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         header {
             position: relative;
@@ -51,13 +52,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #3b82f6, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         .user-info {
             display: none;
@@ -182,8 +176,6 @@
             display: none !important;
         }
         .locked-content {
-            filter: blur(4px);
-            pointer-events: none;
             position: relative;
         }
         .locked-overlay {
@@ -195,11 +187,10 @@
             align-items: center;
             justify-content: center;
             border-radius: 16px;
-            z-index: 5;
+            z-index: 10;
             gap: 15px;
             text-align: center;
             padding: 30px;
-            pointer-events: auto;
         }
         .locked-overlay.hidden {
             display: none;
@@ -208,6 +199,9 @@
             padding: 30px;
             text-align: center;
             margin-bottom: 25px;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid rgba(59, 130, 246, 0.18);
+            border-radius: 16px;
         }
         .upload-area {
             border: 2px dashed rgba(59, 130, 246, 0.4);
@@ -278,18 +272,18 @@
     <div class="bg-blob-1"></div>
     <div class="bg-blob-2"></div>
 
-    <!-- Modal Login/Daftar -->
+    <!-- MODAL LOGIN/DAFTAR -->
     <div id="authModal" class="auth-modal">
         <div class="auth-card">
             <div style="text-align:center; margin-bottom:20px;">
                 <div class="logo">Xdnry777</div>
             </div>
             <div class="auth-tabs">
-                <button class="auth-tab active" id="tabLogin">Masuk</button>
-                <button class="auth-tab" id="tabReg">Daftar</button>
+                <button type="button" class="auth-tab active" id="tabLogin">Masuk</button>
+                <button type="button" class="auth-tab" id="tabReg">Daftar</button>
             </div>
 
-            <!-- Form Login -->
+            <!-- FORM LOGIN -->
             <form id="formLogin">
                 <div class="form-group">
                     <label>Nama Pengguna</label>
@@ -300,11 +294,11 @@
                     <input type="password" id="passLogin" required>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%;">Masuk</button>
-                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="closeAuth">Kembali</button>
+                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="btnTutupAuth">Kembali</button>
                 <div id="msgLogin" class="message"></div>
             </form>
 
-            <!-- Form Daftar -->
+            <!-- FORM DAFTAR -->
             <form id="formReg" class="hidden">
                 <div class="form-group">
                     <label>Nama Pengguna</label>
@@ -319,21 +313,21 @@
                     <input type="password" id="passReg2" required>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%;">Buat Akun</button>
-                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="toLogin">Sudah Punya Akun?</button>
+                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="btnKeLogin">Sudah Punya Akun?</button>
                 <div id="msgReg" class="message"></div>
             </form>
         </div>
     </div>
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header>
         <div class="logo">Xdnry777</div>
         <div>
-            <div class="user-info" id="userBar">
-                <span id="namaUser"></span>
-                <button class="btn btn-secondary btn-sm" id="btnKeluar">Keluar</button>
+            <div class="user-info" id="infoPengguna">
+                <span id="namaPengguna"></span>
+                <button type="button" class="btn btn-secondary btn-sm" id="btnKeluar">Keluar</button>
             </div>
-            <button class="btn btn-primary btn-sm" id="btnMasuk">Masuk / Daftar</button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnBukaAuth">Masuk / Daftar</button>
         </div>
     </header>
 
@@ -343,73 +337,69 @@
             <p>Kompres foto & video tanpa hilang kualitas, unduh video TikTok & Instagram</p>
         </section>
 
-        <!-- Tab Navigasi -->
+        <!-- TAB NAVIGASI -->
         <div class="tabs-nav">
-            <button class="tab-btn active" data-tab="kompres">Kompres Status</button>
-            <button class="tab-btn" data-tab="download">Download Media</button>
+            <button type="button" class="tab-btn active" data-tab="kompres">Kompres Status</button>
+            <button type="button" class="tab-btn" data-tab="download">Download Media</button>
         </div>
 
-        <!-- Tab Kompres -->
+        <!-- TAB KOMPRES -->
         <div class="tab-pane active" id="kompres">
-            <div id="areaTerkunci" class="locked-content">
-                <div class="locked-overlay">
+            <div class="locked-content">
+                <div class="locked-overlay" id="overlayKunci">
                     <h3>Silakan Masuk Dulu</h3>
                     <p>Butuh akun untuk pakai fitur ini</p>
-                    <button class="btn btn-primary" id="bukaAuth1">Masuk / Daftar</button>
+                    <button type="button" class="btn btn-primary" id="btnBukaAuth2">Masuk / Daftar</button>
                 </div>
-                <div class="section-box glass">
+                <div class="section-box">
                     <h3 style="margin-bottom:15px;">Unggah Foto atau Video</h3>
                     <div class="upload-area" id="kotakUnggah">
                         <p>Klik di sini atau seret file ke kotak ini</p>
-                        <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+                        <input type="file" id="inputFile" accept="image/*,video/*" style="display:none;">
                     </div>
                     <p style="color:#94a3b8; margin-top:10px; font-size:0.9rem;">Format: JPG, PNG, MP4, MOV</p>
                 </div>
             </div>
         </div>
 
-        <!-- Tab Download -->
+        <!-- TAB DOWNLOAD -->
         <div class="tab-pane" id="download">
-            <div class="section-box glass">
+            <div class="section-box">
                 <h3 style="margin-bottom:15px;">Download Video & Foto</h3>
-                <input type="text" class="input-field" id="linkInput" placeholder="Tempel tautan TikTok / Instagram di sini...">
-                <button class="btn btn-primary" id="btnDownload">Dapatkan Tautan</button>
+                <input type="text" class="input-field" id="inputLink" placeholder="Tempel tautan TikTok / Instagram di sini...">
+                <button type="button" class="btn btn-primary" id="btnDapatkan">Dapatkan Tautan</button>
                 <div id="msgDownload" class="message"></div>
             </div>
         </div>
     </div>
 
     <script>
-        const STORAGE_KEY = 'xdnry777_data';
+        const KUNCI_STORAGE = 'xdnry777_akun';
 
-        // Cek status login saat halaman dibuka
-        function cekLogin() {
-            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-            if (data.loggedIn) {
-                document.getElementById('userBar').classList.add('show');
-                document.getElementById('btnMasuk').style.display = 'none';
-                document.getElementById('namaUser').textContent = data.username;
-                document.querySelector('.locked-overlay').classList.add('hidden');
-                document.getElementById('areaTerkunci').style.filter = 'none';
-                document.getElementById('areaTerkunci').style.pointerEvents = 'auto';
+        // Cek status login
+        function periksaLogin() {
+            const data = JSON.parse(localStorage.getItem(KUNCI_STORAGE) || '{}');
+            if (data.sudahMasuk) {
+                document.getElementById('infoPengguna').classList.add('show');
+                document.getElementById('btnBukaAuth').style.display = 'none';
+                document.getElementById('namaPengguna').textContent = data.nama;
+                document.getElementById('overlayKunci').classList.add('hidden');
             } else {
-                document.getElementById('userBar').classList.remove('show');
-                document.getElementById('btnMasuk').style.display = 'block';
-                document.querySelector('.locked-overlay').classList.remove('hidden');
-                document.getElementById('areaTerkunci').style.filter = 'blur(4px)';
-                document.getElementById('areaTerkunci').style.pointerEvents = 'none';
+                document.getElementById('infoPengguna').classList.remove('show');
+                document.getElementById('btnBukaAuth').style.display = 'block';
+                document.getElementById('overlayKunci').classList.remove('hidden');
             }
         }
 
-        // Buka/tutup modal auth
-        function bukaAuth() {
+        // Buka/tutup modal
+        function bukaModalAuth() {
             document.getElementById('authModal').classList.add('show');
-            resetAuthForm();
+            resetFormAuth();
         }
-        function tutupAuth() {
+        function tutupModalAuth() {
             document.getElementById('authModal').classList.remove('show');
         }
-        function resetAuthForm() {
+        function resetFormAuth() {
             document.getElementById('formLogin').classList.remove('hidden');
             document.getElementById('formReg').classList.add('hidden');
             document.getElementById('tabLogin').classList.add('active');
@@ -420,11 +410,21 @@
             document.getElementById('formReg').reset();
         }
 
-        // Switch tab login/daftar
+        // Ganti tab Login/Daftar
         document.getElementById('tabLogin').addEventListener('click', function() {
             this.classList.add('active');
             document.getElementById('tabReg').classList.remove('active');
             document.getElementById('formLogin').classList.remove('hidden');
             document.getElementById('formReg').classList.add('hidden');
         });
-        document.getElementById
+        document.getElementById('tabReg').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('tabLogin').classList.remove('active');
+            document.getElementById('formReg').classList.remove('hidden');
+            document.getElementById('formLogin').classList.add('hidden');
+        });
+        document.getElementById('btnKeLogin').addEventListener('click', function() {
+            resetFormAuth();
+        });
+        document.getElementById('btnTutupAuth').addEventListener('click', tut
+                    
