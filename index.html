@@ -11,7 +11,6 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, sans-serif;
         }
-
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #050714 0%, #101b35 50%, #0a1629 100%);
@@ -19,7 +18,6 @@
             position: relative;
             overflow-x: hidden;
         }
-
         .bg-blob-1, .bg-blob-2 {
             position: fixed;
             border-radius: 50%;
@@ -41,16 +39,13 @@
             bottom: -100px;
             left: -100px;
         }
-
         .glass {
             background: rgba(15, 23, 42, 0.55);
             backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid rgba(59, 130, 246, 0.18);
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
         }
-
         header {
             position: relative;
             z-index: 10;
@@ -61,23 +56,19 @@
             flex-wrap: wrap;
             gap: 16px;
         }
-
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(90deg, #3b82f6, #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
         .header-actions {
             display: flex;
             align-items: center;
             gap: 16px;
             flex-wrap: wrap;
         }
-
         .user-info {
             color: #93c5fd;
             font-size: 0.95rem;
@@ -88,10 +79,9 @@
         .user-info.show {
             display: flex;
         }
-
         .btn {
-            padding: 12px 24px;
-            border-radius: 10px;
+            padding: 10px 20px;
+            border-radius: 8px;
             border: none;
             font-size: 0.95rem;
             font-weight: 600;
@@ -101,11 +91,9 @@
         .btn-primary {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
         }
         .btn-secondary {
             background: rgba(59, 130, 246, 0.15);
@@ -115,11 +103,6 @@
         .btn-secondary:hover {
             background: rgba(59, 130, 246, 0.25);
         }
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-        }
-
         .container {
             position: relative;
             z-index: 10;
@@ -127,59 +110,26 @@
             margin: 0 auto;
             padding: 20px 5%;
         }
-
-        .tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            padding: 12px 24px;
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.15);
-            color: #94a3b8;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        .tab-btn.active {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
-            color: #93c5fd;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-
         .hero {
             text-align: center;
             padding: 30px 20px 40px;
         }
         .hero h1 {
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            margin-bottom: 12px;
+            font-size: 2rem;
+            margin-bottom: 10px;
             background: linear-gradient(135deg, #fff, #93c5fd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .hero p {
-            font-size: 1rem;
             color: #94a3b8;
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
-            line-height: 1.7;
         }
-
         .locked-section {
             position: relative;
             filter: blur(4px);
             pointer-events: none;
-            user-select: none;
         }
         .locked-banner {
             position: absolute;
@@ -191,7 +141,7 @@
             justify-content: center;
             border-radius: 20px;
             z-index: 5;
-            gap: 12px;
+            gap: 15px;
             padding: 30px;
             text-align: center;
             pointer-events: auto;
@@ -199,301 +149,13 @@
         .locked-banner.hidden {
             display: none;
         }
-        .locked-banner h3 {
-            color: #e0efff;
-            font-size: 1.2rem;
+        .hidden {
+            display: none !important;
         }
-        .locked-banner p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
         .upload-section, .downloader-section {
-            padding: 35px;
+            padding: 30px;
             text-align: center;
             margin-bottom: 30px;
         }
-
-        .upload-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 16px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .upload-icon svg {
-            width: 32px;
-            height: 32px;
-            fill: white;
-        }
-
-        .input-box {
-            width: 100%;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 12px;
-            padding: 16px 20px;
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-            margin-bottom: 16px;
-        }
-        .input-box:focus {
-            border-color: #3b82f6;
-        }
-        .input-box::placeholder {
-            color: #6b82a8;
-        }
-
-        .platform-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-        .platform-tab {
-            padding: 10px 20px;
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.15);
-            color: #94a3b8;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-        .platform-tab.active {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
-            color: #fff;
-        }
-
         .upload-box {
-            border: 2px dashed rgba(59, 130, 246, 0.4);
-            border-radius: 16px;
-            padding: 40px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .upload-box:hover, .upload-box.dragover {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.08);
-        }
-        input[type="file"] { display: none; }
-
-        .result-area {
-            margin-top: 24px;
-            display: none;
-        }
-        .result-area.active {
-            display: block;
-        }
-        .result-card {
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: left;
-        }
-        .result-thumb {
-            width: 100%;
-            max-width: 200px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            object-fit: cover;
-        }
-        .result-title {
-            color: #e0efff;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-        }
-        .download-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
-        .download-btn {
-            padding: 10px 16px;
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #86efac;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-        }
-        .download-btn:hover {
-            background: rgba(34, 197, 94, 0.25);
-        }
-        .download-btn.primary {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            border: none;
-            color: white;
-        }
-
-        .loading {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        .loading.active {
-            display: flex;
-        }
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(59, 130, 246, 0.2);
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .message-box {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-top: 16px;
-            font-size: 0.9rem;
-            display: none;
-        }
-        .message-box.show {
-            display: block;
-        }
-        .message-box.error {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
-        }
-        .message-box.info {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            color: #93c5fd;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        .feature-card {
-            padding: 24px;
-            transition: transform 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-4px);
-        }
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 16px;
-            background: rgba(59, 130, 246, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .feature-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: #60a5fa;
-        }
-        .feature-card h3 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-            color: #e0efff;
-        }
-        .feature-card p {
-            font-size: 0.9rem;
-            color: #7c94b8;
-            line-height: 1.5;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            position: relative;
-            z-index: 10;
-            color: #64748b;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 768px) {
-            .upload-section, .downloader-section { padding: 24px; }
-            .platform-tabs { flex-wrap: wrap; }
-        }
-    </style>
-</head>
-<body>
-    <div class="bg-blob-1"></div>
-    <div class="bg-blob-2"></div>
-
-    <header>
-        <div class="logo">Xdnry777</div>
-        <div class="header-actions">
-            <div class="user-info" id="userInfo">
-                <span>Halo, <strong id="usernameDisplay"></strong></span>
-                <button class="btn btn-secondary btn-sm" id="logoutBtn">Keluar</button>
-            </div>
-            <button class="btn btn-primary btn-sm" id="openAuthBtn">Masuk / Daftar</button>
-        </div>
-    </header>
-
-    <div class="container">
-        <section class="hero">
-            <h1>HD Status & Downloader Sosmed</h1>
-            <p>Kompres foto dan video tanpa penurunan kualitas, serta unduh konten dari TikTok dan Instagram dengan mudah</p>
-        </section>
-
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="compressor">Kompres Status</button>
-            <button class="tab-btn" data-tab="downloader">Download Media</button>
-        </div>
-
-        <!-- Tab Kompres Status -->
-        <div class="tab-content active" id="compressorTab">
-            <div id="uploadWrapper" class="locked-section">
-                <div class="locked-banner">
-                    <h3>Silakan Masuk Terlebih Dahulu</h3>
-                    <p>Anda harus memiliki akun untuk menggunakan fitur kompresi file</p>
-                    <button class="btn btn-primary" id="goAuthBtn">Buat Akun atau Masuk</button>
-                </div>
-                
-                <div class="upload-section glass">
-                    <div class="upload-box" id="uploadBox">
-                        <div class="upload-icon">
-                            <svg viewBox="0 0 24 24"><path d="M19 15v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                        </div>
-                        <h3>Pilih Foto atau Video</h3>
-                        <p>Klik area ini atau seret file ke dalam kotak</p>
-                        <input type="file" id="fileInput" accept="image/*,video/mp4,video/quicktime">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab Download Media -->
-        <div class="tab-content" id="downloaderTab">
-            <div class="downloader-section glass">
-                <h3>Download Media dari Sosmed</h3>
-                <p style="color:#94a3b8; margin-bottom:20px;">Tempel tautan di bawah ini</p>
-                
-                <div class="platform-tabs">
-                    <button class="platform-tab active" data-platform="tiktok">TikTok</button>
-                    <button class="platform-tab" data-platform="instagram">Instagram</button>
-                </div>
-                
-                <input type="text" id="linkInput" class="input-box" placeholder="Tempel tautan video atau foto di sini...">
-                <button class="btn btn-primary" id="downloadBtn">Dapatkan Tautan Download</button>
-                
-               
+            border:
