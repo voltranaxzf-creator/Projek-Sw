@@ -16,7 +16,6 @@
             background: linear-gradient(135deg, #050714 0%, #101b35 50%, #0a1629 100%);
             color: #fff;
             position: relative;
-            overflow-x: hidden;
         }
         .bg-blob-1, .bg-blob-2 {
             position: fixed;
@@ -44,37 +43,28 @@
             backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid rgba(59, 130, 246, 0.18);
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
         }
         header {
             position: relative;
             z-index: 10;
-            padding: 24px 5%;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
         }
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             background: linear-gradient(90deg, #3b82f6, #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
         .user-info {
-            color: #93c5fd;
-            font-size: 0.95rem;
             display: none;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            color: #93c5fd;
+            font-size: 0.9rem;
         }
         .user-info.show {
             display: flex;
@@ -100,22 +90,23 @@
             color: #93c5fd;
             border: 1px solid rgba(59, 130, 246, 0.25);
         }
-        .btn-secondary:hover {
-            background: rgba(59, 130, 246, 0.25);
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.85rem;
         }
         .container {
             position: relative;
             z-index: 10;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px 5%;
         }
         .hero {
             text-align: center;
-            padding: 30px 20px 40px;
+            padding: 30px 20px;
         }
         .hero h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 10px;
             background: linear-gradient(135deg, #fff, #93c5fd);
             -webkit-background-clip: text;
@@ -123,39 +114,317 @@
         }
         .hero p {
             color: #94a3b8;
-            max-width: 500px;
-            margin: 0 auto;
         }
-        .locked-section {
-            position: relative;
-            filter: blur(4px);
-            pointer-events: none;
-        }
-        .locked-banner {
-            position: absolute;
+        .auth-modal {
+            position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.7);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 20px;
-            z-index: 5;
-            gap: 15px;
-            padding: 30px;
-            text-align: center;
-            pointer-events: auto;
-        }
-        .locked-banner.hidden {
+            z-index: 100;
+            padding: 20px;
             display: none;
+        }
+        .auth-modal.show {
+            display: flex;
+        }
+        .auth-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 380px;
+        }
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 8px;
+            background: transparent;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            color: #94a3b8;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .auth-tab.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #fff;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            color: #93c5fd;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+        input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        input:focus {
+            border-color: #3b82f6;
         }
         .hidden {
             display: none !important;
         }
-        .upload-section, .downloader-section {
+        .locked-content {
+            filter: blur(4px);
+            pointer-events: none;
+            position: relative;
+        }
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            z-index: 5;
+            gap: 15px;
+            text-align: center;
+            padding: 30px;
+            pointer-events: auto;
+        }
+        .locked-overlay.hidden {
+            display: none;
+        }
+        .section-box {
             padding: 30px;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
-        .upload-box {
-            border:
+        .upload-area {
+            border: 2px dashed rgba(59, 130, 246, 0.4);
+            border-radius: 12px;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            color: #94a3b8;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #fff;
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        .message {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .message.show {
+            display: block;
+        }
+        .message.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+        .message.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <!-- Modal Login/Daftar -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-card">
+            <div style="text-align:center; margin-bottom:20px;">
+                <div class="logo">Xdnry777</div>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin">Masuk</button>
+                <button class="auth-tab" id="tabReg">Daftar</button>
+            </div>
+
+            <!-- Form Login -->
+            <form id="formLogin">
+                <div class="form-group">
+                    <label>Nama Pengguna</label>
+                    <input type="text" id="userLogin" required>
+                </div>
+                <div class="form-group">
+                    <label>Kata Sandi</label>
+                    <input type="password" id="passLogin" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Masuk</button>
+                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="closeAuth">Kembali</button>
+                <div id="msgLogin" class="message"></div>
+            </form>
+
+            <!-- Form Daftar -->
+            <form id="formReg" class="hidden">
+                <div class="form-group">
+                    <label>Nama Pengguna</label>
+                    <input type="text" id="userReg" required>
+                </div>
+                <div class="form-group">
+                    <label>Kata Sandi</label>
+                    <input type="password" id="passReg" required>
+                </div>
+                <div class="form-group">
+                    <label>Ulangi Kata Sandi</label>
+                    <input type="password" id="passReg2" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Buat Akun</button>
+                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="toLogin">Sudah Punya Akun?</button>
+                <div id="msgReg" class="message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Xdnry777</div>
+        <div>
+            <div class="user-info" id="userBar">
+                <span id="namaUser"></span>
+                <button class="btn btn-secondary btn-sm" id="btnKeluar">Keluar</button>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btnMasuk">Masuk / Daftar</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>HD Status & Downloader Sosmed</h1>
+            <p>Kompres foto & video tanpa hilang kualitas, unduh video TikTok & Instagram</p>
+        </section>
+
+        <!-- Tab Navigasi -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="kompres">Kompres Status</button>
+            <button class="tab-btn" data-tab="download">Download Media</button>
+        </div>
+
+        <!-- Tab Kompres -->
+        <div class="tab-pane active" id="kompres">
+            <div id="areaTerkunci" class="locked-content">
+                <div class="locked-overlay">
+                    <h3>Silakan Masuk Dulu</h3>
+                    <p>Butuh akun untuk pakai fitur ini</p>
+                    <button class="btn btn-primary" id="bukaAuth1">Masuk / Daftar</button>
+                </div>
+                <div class="section-box glass">
+                    <h3 style="margin-bottom:15px;">Unggah Foto atau Video</h3>
+                    <div class="upload-area" id="kotakUnggah">
+                        <p>Klik di sini atau seret file ke kotak ini</p>
+                        <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+                    </div>
+                    <p style="color:#94a3b8; margin-top:10px; font-size:0.9rem;">Format: JPG, PNG, MP4, MOV</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Download -->
+        <div class="tab-pane" id="download">
+            <div class="section-box glass">
+                <h3 style="margin-bottom:15px;">Download Video & Foto</h3>
+                <input type="text" class="input-field" id="linkInput" placeholder="Tempel tautan TikTok / Instagram di sini...">
+                <button class="btn btn-primary" id="btnDownload">Dapatkan Tautan</button>
+                <div id="msgDownload" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'xdnry777_data';
+
+        // Cek status login saat halaman dibuka
+        function cekLogin() {
+            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            if (data.loggedIn) {
+                document.getElementById('userBar').classList.add('show');
+                document.getElementById('btnMasuk').style.display = 'none';
+                document.getElementById('namaUser').textContent = data.username;
+                document.querySelector('.locked-overlay').classList.add('hidden');
+                document.getElementById('areaTerkunci').style.filter = 'none';
+                document.getElementById('areaTerkunci').style.pointerEvents = 'auto';
+            } else {
+                document.getElementById('userBar').classList.remove('show');
+                document.getElementById('btnMasuk').style.display = 'block';
+                document.querySelector('.locked-overlay').classList.remove('hidden');
+                document.getElementById('areaTerkunci').style.filter = 'blur(4px)';
+                document.getElementById('areaTerkunci').style.pointerEvents = 'none';
+            }
+        }
+
+        // Buka/tutup modal auth
+        function bukaAuth() {
+            document.getElementById('authModal').classList.add('show');
+            resetAuthForm();
+        }
+        function tutupAuth() {
+            document.getElementById('authModal').classList.remove('show');
+        }
+        function resetAuthForm() {
+            document.getElementById('formLogin').classList.remove('hidden');
+            document.getElementById('formReg').classList.add('hidden');
+            document.getElementById('tabLogin').classList.add('active');
+            document.getElementById('tabReg').classList.remove('active');
+            document.getElementById('msgLogin').classList.remove('show');
+            document.getElementById('msgReg').classList.remove('show');
+            document.getElementById('formLogin').reset();
+            document.getElementById('formReg').reset();
+        }
+
+        // Switch tab login/daftar
+        document.getElementById('tabLogin').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('tabReg').classList.remove('active');
+            document.getElementById('formLogin').classList.remove('hidden');
+            document.getElementById('formReg').classList.add('hidden');
+        });
+        document.getElementById
