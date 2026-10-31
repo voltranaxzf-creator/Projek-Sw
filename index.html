@@ -53,10 +53,10 @@
             justify-content: center;
         }
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             border: none;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -67,6 +67,11 @@
         }
         .btn-primary:hover {
             transform: translateY(-2px);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
         .container {
             position: relative;
@@ -125,12 +130,14 @@
             margin-bottom: 25px;
         }
         .tab-btn {
-            padding: 10px 20px;
+            flex: 1;
+            padding: 12px 20px;
             background: rgba(59, 130, 246, 0.08);
             border: 1px solid rgba(59, 130, 246, 0.15);
             color: #94a3b8;
             border-radius: 8px;
             cursor: pointer;
+            font-size: 0.95rem;
         }
         .tab-btn.active {
             background: rgba(59, 130, 246, 0.2);
@@ -144,11 +151,12 @@
             display: block;
         }
         .message {
-            margin-top: 12px;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
             display: none;
+            line-height: 1.5;
         }
         .message.show {
             display: block;
@@ -157,16 +165,30 @@
             background: rgba(59, 130, 246, 0.15);
             color: #93c5fd;
         }
+        .message.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+        }
         .hidden {
             display: none !important;
         }
         #previewArea {
-            margin-top: 20px;
+            margin-top: 25px;
         }
-        #previewArea img, #previewArea video {
+        #previewArea h4 {
+            color: #93c5fd;
+            margin-bottom: 12px;
+        }
+        .preview-img, .preview-vid {
             max-width: 100%;
-            max-height: 300px;
+            max-height: 350px;
             border-radius: 8px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+        .tip {
+            font-size: 0.85rem;
+            color: #6b7280;
             margin-top: 10px;
         }
     </style>
@@ -182,7 +204,7 @@
     <div class="container">
         <section class="hero">
             <h1>HD Status & Downloader Sosmed</h1>
-            <p>Kompres foto & video tanpa hilang kualitas, unduh video TikTok & Instagram</p>
+            <p>Kompres foto & video, unduh video TikTok & Instagram</p>
         </section>
 
         <div class="tabs-nav">
@@ -193,17 +215,18 @@
         <!-- TAB KOMPRES -->
         <div class="tab-pane active" id="kompres">
             <div class="section-box">
-                <h3 style="margin-bottom:15px;">Unggah Foto atau Video</h3>
+                <h3 style="margin-bottom:15px;">Pilih Foto atau Video</h3>
                 <div class="upload-area" id="kotakUnggah">
-                    <p>Klik di sini atau seret file ke kotak ini</p>
+                    <p style="font-size:1.1rem; font-weight:500;">👆 Klik di sini untuk pilih file</p>
+                    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">Format: JPG, PNG, MP4, MOV</p>
                     <input type="file" id="inputFile" accept="image/*,video/*" style="display:none;">
                 </div>
-                <p style="color:#94a3b8; margin-top:10px; font-size:0.9rem;">Format: JPG, PNG, MP4, MOV</p>
                 
                 <div id="previewArea" class="hidden">
-                    <h4 style="margin:15px 0 5px;">Pratinjau:</h4>
+                    <h4>Pratinjau:</h4>
                     <div id="previewContent"></div>
-                    <button type="button" class="btn btn-primary" id="btnDownloadFile" style="margin-top:15px;">Simpan File</button>
+                    <button type="button" class="btn btn-primary" id="btnSimpan">💾 Simpan File</button>
+                    <p class="tip">📱 Di HP: tahan gambar/video → pilih "Unduh/Gambar"</p>
                 </div>
             </div>
         </div>
@@ -213,8 +236,13 @@
             <div class="section-box">
                 <h3 style="margin-bottom:15px;">Download Video & Foto</h3>
                 <input type="text" class="input-field" id="inputLink" placeholder="Tempel tautan TikTok / Instagram di sini...">
-                <button type="button" class="btn btn-primary" id="btnDapatkan">Dapatkan Tautan</button>
-                <div id="msgDownload" class="message info">💡 Masukkan tautan lalu klik tombol di atas</div>
+                <button type="button" class="btn btn-primary" id="btnDapatkan">🔗 Buka di Situs Downloader</button>
+                <div id="msgDownload" class="message info">
+                    💡 Salin tautan video, tempel di atas, lalu klik tombol.<br>
+                    Situs rekomendasi:<br>
+                    • TikTok → <strong>snaptik.app</strong><br>
+                    • Instagram → <strong>snapinsta.app</strong>
+                </div>
             </div>
         </div>
     </div>
@@ -232,13 +260,14 @@
             });
         });
 
-        // Upload & Preview File
+        // Upload & Preview
         const kotakUnggah = document.getElementById('kotakUnggah');
         const inputFile = document.getElementById('inputFile');
         const previewArea = document.getElementById('previewArea');
         const previewContent = document.getElementById('previewContent');
-        const btnDownloadFile = document.getElementById('btnDownloadFile');
+        const btnSimpan = document.getElementById('btnSimpan');
         let fileSaatIni = null;
+        let urlSaatIni = null;
 
         kotakUnggah.addEventListener('click', () => inputFile.click());
 
@@ -247,28 +276,46 @@
             if (!file) return;
             
             fileSaatIni = file;
+            if (urlSaatIni) URL.revokeObjectURL(urlSaatIni);
             previewContent.innerHTML = '';
             
             if (file.type.startsWith('image/')) {
                 const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
+                urlSaatIni = URL.createObjectURL(file);
+                img.src = urlSaatIni;
+                img.className = 'preview-img';
                 previewContent.appendChild(img);
             } else if (file.type.startsWith('video/')) {
                 const video = document.createElement('video');
-                video.src = URL.createObjectURL(file);
+                urlSaatIni = URL.createObjectURL(file);
+                video.src = urlSaatIni;
                 video.controls = true;
+                video.className = 'preview-vid';
                 previewContent.appendChild(video);
             }
             
             previewArea.classList.remove('hidden');
         });
 
-        btnDownloadFile.addEventListener('click', function() {
-            if (!fileSaatIni) return;
+        // Simpan file - alternatif untuk HP
+        btnSimpan.addEventListener('click', function() {
+            if (!fileSaatIni || !urlSaatIni) return;
+            
+            // Coba cara biasa dulu
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(fileSaatIni);
-            a.download = fileSaatIni.name;
+            a.href = urlSaatIni;
+            a.download = fileSaatIni.name || 'file';
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
+            
+            // Tampilkan pesan alternatif untuk HP
+            const pesan = document.createElement('div');
+            pesan.className = 'message success show';
+            pesan.innerHTML = '✅ Jika unduh otomatis gagal:<br>👉 <strong>Tahan gambar/video</strong> → pilih <strong>"Simpan Gambar/Video"</strong>';
+            previewContent.appendChild(pesan);
+            
+            setTimeout(() => pesan.remove(), 5000);
         });
 
         // Download Sosmed
@@ -279,12 +326,26 @@
         btnDapatkan.addEventListener('click', function() {
             const link = inputLink.value.trim();
             if (!link) {
-                msgDownload.textContent = '⚠️ Silakan masukkan tautan terlebih dahulu!';
-                msgDownload.classList.add('show');
+                msgDownload.textContent = '⚠️ Masukkan tautan dulu!';
+                msgDownload.className = 'message info show';
                 return;
             }
-            msgDownload.innerHTML = '✅ Tautan diterima.<br>⚠️ Fitur unduh langsung membutuhkan server khusus. Gunakan layanan seperti snaptik.app untuk TikTok atau inflact.com untuk Instagram.<br>🔗 Tautan kamu: <a href="'+link+'" target="_blank" style="color:#60a5fa; word-break:break-all;">'+link+'</a>';
+            
+            let urlTujuan = '';
+            if (link.includes('tiktok.com')) {
+                urlTujuan = 'https://snaptik.app';
+                msgDownload.innerHTML = '✅ Tautan TikTok terdeteksi!<br>🔗 Buka: <a href="https://snaptik.app" target="_blank" style="color:#60a5fa;">snaptik.app</a><br>Salin tautan di atas, tempel ke Snaptik untuk unduh.';
+            } else if (link.includes('instagram.com')) {
+                urlTujuan = 'https://snapinsta.app';
+                msgDownload.innerHTML = '✅ Tautan Instagram terdeteksi!<br>🔗 Buka: <a href="https://snapinsta.app" target="_blank" style="color:#60a5fa;">snapinsta.app</a><br>Salin tautan di atas, tempel ke Snapinsta untuk unduh.';
+            } else {
+                msgDownload.innerHTML = '⚠️ Tautan tidak dikenali.<br>Gunakan layanan:<br>• TikTok → snaptik.app<br>• Instagram → snapinsta.app';
+                msgDownload.className = 'message info show';
+                return;
+            }
+            
             msgDownload.classList.add('show');
+            window.open(urlTujuan, '_blank');
         });
     </script>
 </body>
