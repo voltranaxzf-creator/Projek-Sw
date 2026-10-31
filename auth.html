@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PureStatus — Pusat Akun</title>
+    <title>Xdnry777 — Akun</title>
     <style>
         * {
             margin: 0;
@@ -11,18 +11,15 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, sans-serif;
         }
-
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #050714 0%, #101b35 50%, #0a1629 100%);
             color: #fff;
-            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-
         .bg-blob-1, .bg-blob-2 {
             position: fixed;
             border-radius: 50%;
@@ -44,104 +41,77 @@
             bottom: -100px;
             left: -100px;
         }
-
-        .glass {
+        .card {
+            position: relative;
+            z-index: 1;
             background: rgba(15, 23, 42, 0.55);
             backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid rgba(59, 130, 246, 0.18);
             border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 420px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
         }
-
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 440px;
-        }
-
         .logo {
-            text-align: center;
             font-size: 1.8rem;
             font-weight: 700;
             background: linear-gradient(90deg, #3b82f6, #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
             text-align: center;
-            color: #94a3b8;
-            font-size: 0.95rem;
             margin-bottom: 30px;
         }
-
-        .auth-tabs {
+        .tab-group {
             display: flex;
-            margin-bottom: 24px;
-            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            gap: 10px;
+            margin-bottom: 25px;
         }
-        .auth-tab {
+        .tab {
             flex: 1;
-            padding: 12px;
-            text-align: center;
-            color: #7c94b8;
-            font-weight: 600;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            color: #94a3b8;
+            border-radius: 8px;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
+            font-size: 0.95rem;
             transition: all 0.3s;
         }
-        .auth-tab.active {
-            color: #60a5fa;
-            border-bottom-color: #3b82f6;
+        .tab.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #fff;
         }
-
-        .auth-form {
-            display: none;
-        }
-        .auth-form.active {
-            display: block;
-        }
-
-        .auth-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #e0efff;
-            font-size: 1.3rem;
-        }
-
         .form-group {
             margin-bottom: 18px;
         }
-        .form-group label {
+        label {
             display: block;
+            color: #93c5fd;
             font-size: 0.9rem;
-            color: #94a3b8;
             margin-bottom: 8px;
         }
-        .form-group input {
+        input {
             width: 100%;
+            padding: 12px 16px;
             background: rgba(30, 41, 59, 0.5);
             border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 10px;
-            padding: 14px 16px;
+            border-radius: 8px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: border-color 0.3s;
         }
-        .form-group input:focus {
+        input:focus {
             border-color: #3b82f6;
         }
-
         .btn {
-            padding: 14px 36px;
-            border-radius: 12px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -149,74 +119,38 @@
         .btn-primary {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
         }
         .btn-secondary {
             background: rgba(59, 130, 246, 0.15);
             color: #93c5fd;
-            border: 1px solid rgba(59, 130, 246, 0.25);
+            margin-top: 10px;
         }
         .btn-secondary:hover {
             background: rgba(59, 130, 246, 0.25);
         }
-        .btn-full {
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        .message-box {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            font-size: 0.9rem;
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
             display: none;
         }
-        .message-box.error {
+        .message.show {
             display: block;
+        }
+        .message.error {
             background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
             color: #fca5a5;
         }
-        .message-box.success {
-            display: block;
+        .message.success {
             background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.3);
             color: #86efac;
         }
-
-        .status-box {
-            text-align: center;
-            padding: 20px;
-            display: none;
-        }
-        .status-box.active {
-            display: block;
-        }
-        .status-box h3 {
-            color: #e0efff;
-            margin-bottom: 8px;
-        }
-        .status-box p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-top: 24px;
-        }
-        .back-link a {
-            color: #60a5fa;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .back-link a:hover {
-            text-decoration: underline;
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
@@ -224,201 +158,132 @@
     <div class="bg-blob-1"></div>
     <div class="bg-blob-2"></div>
 
-    <div class="container">
-        <div class="glass" style="padding: 36px;">
-            <div class="logo">✨ Pusat Akun PureStatus</div>
-            <p class="subtitle">Kelola akun Anda untuk mengakses semua layanan PureStatus</p>
+    <div class="card">
+        <div class="logo">Xdnry777</div>
 
-            <!-- Tabs -->
-            <div class="auth-tabs">
-                <div class="auth-tab active" data-tab="login">Masuk</div>
-                <div class="auth-tab" data-tab="register">Daftar</div>
-            </div>
-
-            <!-- Form Login -->
-            <form class="auth-form active" id="loginForm">
-                <h2>Masuk ke Akun Anda</h2>
-                <div class="message-box" id="loginMsg"></div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="loginUser" required placeholder="Masukkan username">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPass" required placeholder="Masukkan password">
-                </div>
-                <button type="submit" class="btn btn-primary btn-full">Masuk</button>
-            </form>
-
-            <!-- Form Daftar -->
-            <form class="auth-form" id="registerForm">
-                <h2>Buat Akun Baru</h2>
-                <div class="message-box" id="regMsg"></div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="regUser" required placeholder="Pilih username">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="regPass" required placeholder="Min. 6 karakter">
-                </div>
-                <div class="form-group">
-                    <label>Ulangi Password</label>
-                    <input type="password" id="regPass2" required placeholder="Ketik ulang password">
-                </div>
-                <button type="submit" class="btn btn-primary btn-full">Daftar Sekarang</button>
-            </form>
-
-            <!-- Status Berhasil -->
-            <div class="status-box" id="successBox">
-                <h3 id="successTitle">✅ Berhasil!</h3>
-                <p id="successText">Sedang dialihkan kembali...</p>
-                <button class="btn btn-secondary" onclick="closeWindow()">Tutup Halaman Ini</button>
-            </div>
-
-            <div class="back-link">
-                <a href="javascript:history.back()">← Kembali ke Halaman Utama</a>
-            </div>
+        <div class="tab-group">
+            <button class="tab active" id="tabLogin">Masuk</button>
+            <button class="tab" id="tabRegister">Daftar</button>
         </div>
+
+        <!-- Form Login -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Nama Pengguna</label>
+                <input type="text" id="loginUser" required>
+            </div>
+            <div class="form-group">
+                <label>Kata Sandi</label>
+                <input type="password" id="loginPass" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Masuk</button>
+            <button type="button" class="btn btn-secondary" onclick="window.close()">Kembali</button>
+            <div id="loginMsg" class="message"></div>
+        </form>
+
+        <!-- Form Daftar -->
+        <form id="registerForm" class="hidden">
+            <div class="form-group">
+                <label>Nama Pengguna</label>
+                <input type="text" id="regUser" required>
+            </div>
+            <div class="form-group">
+                <label>Kata Sandi</label>
+                <input type="password" id="regPass" required>
+            </div>
+            <div class="form-group">
+                <label>Ulangi Kata Sandi</label>
+                <input type="password" id="regPass2" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Buat Akun</button>
+            <button type="button" class="btn btn-secondary" onclick="switchTab('login')">Sudah Punya Akun?</button>
+            <div id="regMsg" class="message"></div>
+        </form>
     </div>
 
     <script>
-        // === KONFIGURASI PENYIMPANAN DATA ===
-        const STORAGE_KEY = 'purestatus_accounts';
-        const SESSION_KEY = 'purestatus_session';
+        const STORAGE_KEY = 'xdnry777_user';
 
-        // Ambil semua akun yang tersimpan
-        function getAllAccounts() {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : [];
-        }
-
-        // Simpan akun baru
-        function saveAccount(username, password) {
-            const accounts = getAllAccounts();
-            
-            // Cek username sudah ada
-            if (accounts.find(a => a.username.toLowerCase() === username.toLowerCase())) {
-                return { success: false, message: 'Username sudah digunakan!' };
-            }
-
-            accounts.push({
-                username: username,
-                password: password,
-                createdAt: new Date().toISOString()
-            });
-
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(accounts));
-            return { success: true, message: 'Pendaftaran berhasil!' };
-        }
-
-        // Cek login
-        function verifyLogin(username, password) {
-            const accounts = getAllAccounts();
-            const account = accounts.find(a => 
-                a.username.toLowerCase() === username.toLowerCase() && 
-                a.password === password
-            );
-            
-            if (account) {
-                // Simpan sesi login
-                const sessionData = {
-                    username: account.username,
-                    loggedInAt: new Date().toISOString()
-                };
-                localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-                return { success: true, username: account.username };
-            }
-            return { success: false, message: 'Username atau password salah!' };
-        }
-
-        // Tutup jendela dan beri tahu halaman utama
-        function closeWindow() {
-            // Kirim pesan ke halaman induk kalau login berhasil
-            if (window.opener) {
-                window.opener.postMessage({ 
-                    type: 'authSuccess',
-                    username: localStorage.getItem(SESSION_KEY) 
-                        ? JSON.parse(localStorage.getItem(SESSION_KEY)).username 
-                        : null
-                }, '*');
-            }
-            window.close();
-        }
-
-        // === TAB SWITCH ===
-        document.querySelectorAll('.auth-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-                
-                tab.classList.add('active');
-                const targetForm = tab.dataset.tab === 'login' ? 'loginForm' : 'registerForm';
-                document.getElementById(targetForm).classList.add('active');
-                
-                // Sembunyikan kotak pesan
-                document.querySelectorAll('.message-box').forEach(m => m.style.display = 'none');
-                document.getElementById('successBox').classList.remove('active');
-            });
-        });
-
-        // === FORM DAFTAR ===
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('regUser').value.trim();
-            const password = document.getElementById('regPass').value;
-            const password2 = document.getElementById('regPass2').value;
-            const msgBox = document.getElementById('regMsg');
-
-            msgBox.classList.remove('error', 'success');
-            
-            if (username.length < 3) {
-                msgBox.textContent = 'Username minimal 3 karakter!';
-                msgBox.classList.add('error');
-                return;
-            }
-            if (password.length < 6) {
-                msgBox.textContent = 'Password minimal 6 karakter!';
-                msgBox.classList.add('error');
-                return;
-            }
-            if (password !== password2) {
-                msgBox.textContent = 'Password tidak cocok!';
-                msgBox.classList.add('error');
-                return;
-            }
-
-            const result = saveAccount(username, password);
-            if (result.success) {
-                msgBox.classList.add('success');
-                msgBox.textContent = result.message;
-                setTimeout(() => {
-                    // Otomatis pindah ke tab login setelah daftar
-                    document.querySelector('[data-tab="login"]').click();
-                    document.getElementById('loginMsg').classList.add('success');
-                    document.getElementById('loginMsg').textContent = 'Akun berhasil dibuat! Silakan masuk.';
-                }, 1200);
+        function switchTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('tabLogin').classList.add('active');
+                document.getElementById('tabRegister').classList.remove('active');
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('registerForm').classList.add('hidden');
             } else {
-                msgBox.classList.add('error');
-                msgBox.textContent = result.message;
+                document.getElementById('tabLogin').classList.remove('active');
+                document.getElementById('tabRegister').classList.add('active');
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('registerForm').classList.remove('hidden');
             }
-        });
+        }
 
-        // === FORM LOGIN ===
+        document.getElementById('tabLogin').addEventListener('click', () => switchTab('login'));
+        document.getElementById('tabRegister').addEventListener('click', () => switchTab('register'));
+
+        // Login
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const username = document.getElementById('loginUser').value.trim();
-            const password = document.getElementById('loginPass').value;
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value;
             const msgBox = document.getElementById('loginMsg');
 
-            msgBox.classList.remove('error', 'success');
-            
-            const result = verifyLogin(username, password);
-            if (result.success) {
-                // Tampilkan kotak sukses
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('successBox').classList.add('active');
-                document.getElementById('successTitle').textContent = `✅ Selamat Datang, ${result.username}!`;
-                document.getElementById('successText').textContent = 'Berhasil masuk ke akun PureStatus';
-                
-               
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) {
+                msgBox.textContent = 'Akun tidak ditemukan. Silakan daftar dulu.';
+                msgBox.className = 'message error show';
+                return;
+            }
+            const data = JSON.parse(saved);
+            if (data.username === user && data.password === pass) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({...data, loggedIn: true}));
+                msgBox.textContent = 'Berhasil masuk! Menutup halaman...';
+                msgBox.className = 'message success show';
+                setTimeout(() => {
+                    if (window.opener) window.opener.location.reload();
+                    window.close();
+                }, 800);
+            } else {
+                msgBox.textContent = 'Nama pengguna atau kata sandi salah.';
+                msgBox.className = 'message error show';
+            }
+        });
+
+        // Daftar
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('regUser').value.trim();
+            const pass = document.getElementById('regPass').value;
+            const pass2 = document.getElementById('regPass2').value;
+            const msgBox = document.getElementById('regMsg');
+
+            if (user.length < 3) {
+                msgBox.textContent = 'Nama pengguna minimal 3 karakter.';
+                msgBox.className = 'message error show';
+                return;
+            }
+            if (pass.length < 4) {
+                msgBox.textContent = 'Kata sandi minimal 4 karakter.';
+                msgBox.className = 'message error show';
+                return;
+            }
+            if (pass !== pass2) {
+                msgBox.textContent = 'Kata sandi tidak cocok.';
+                msgBox.className = 'message error show';
+                return;
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                username: user,
+                password: pass,
+                loggedIn: true
+            }));
+            msgBox.textContent = 'Akun berhasil dibuat! Masuk ke halaman utama...';
+            msgBox.className = 'message success show';
+            setTimeout(() => {
+                if (window.opener) window.opener.location.reload();
+                window.close();
+            }, 800);
+        });
+    </script>
+</body>
+</html>
