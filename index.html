@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xdnry777 — HD Status & Downloader</title>
+    <title>Xdnry777 — Kompres & Downloader</title>
     <style>
         * {
             margin: 0;
@@ -73,6 +73,11 @@
             cursor: not-allowed;
             transform: none;
         }
+        .btn-success {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            margin-top: 15px;
+        }
         .container {
             position: relative;
             z-index: 10;
@@ -108,6 +113,7 @@
             padding: 40px 20px;
             cursor: pointer;
             transition: all 0.3s;
+            margin-bottom: 20px;
         }
         .upload-area:hover {
             border-color: #3b82f6;
@@ -169,27 +175,92 @@
             background: rgba(34, 197, 94, 0.15);
             color: #86efac;
         }
+        .message.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
         .hidden {
             display: none !important;
         }
-        #previewArea {
-            margin-top: 25px;
+        .settings-box {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
         }
-        #previewArea h4 {
+        .settings-box h4 {
             color: #93c5fd;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            text-align: center;
         }
-        .preview-img, .preview-vid {
-            max-width: 100%;
-            max-height: 350px;
+        .setting-row {
+            margin-bottom: 15px;
+        }
+        .setting-row label {
+            display: block;
+            color: #e5e7eb;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+        .setting-row input[type="range"] {
+            width: 100%;
+            accent-color: #3b82f6;
+        }
+        .setting-row select {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: rgba(17, 24, 39, 0.5);
             border-radius: 8px;
-            margin: 0 auto 15px;
+            padding: 12px;
+            margin: 10px 0;
+            text-align: left;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+        .info-box strong {
+            color: #60a5fa;
+        }
+        .preview-img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin: 15px auto;
             display: block;
         }
-        .tip {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-top: 10px;
+        .size-compare {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .size-item {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .size-item span:first-child {
+            display: block;
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        .size-item span:last-child {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .savings {
+            color: #4ade80 !important;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -203,31 +274,68 @@
 
     <div class="container">
         <section class="hero">
-            <h1>HD Status & Downloader Sosmed</h1>
-            <p>Kompres foto & video, unduh video TikTok & Instagram</p>
+            <h1>Kompres Foto & Downloader</h1>
+            <p>Perkecil ukuran foto tanpa banyak hilang kualitas</p>
         </section>
 
         <div class="tabs-nav">
-            <button type="button" class="tab-btn active" data-tab="kompres">Kompres Status</button>
+            <button type="button" class="tab-btn active" data-tab="kompres">Kompres Foto</button>
             <button type="button" class="tab-btn" data-tab="download">Download Media</button>
         </div>
 
-        <!-- TAB KOMPRES -->
+        <!-- TAB KOMPRES FOTO -->
         <div class="tab-pane active" id="kompres">
             <div class="section-box">
-                <h3 style="margin-bottom:15px;">Pilih Foto atau Video</h3>
+                <h3 style="margin-bottom:15px;">Pilih Foto</h3>
                 <div class="upload-area" id="kotakUnggah">
-                    <p style="font-size:1.1rem; font-weight:500;">👆 Klik di sini untuk pilih file</p>
-                    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">Format: JPG, PNG, MP4, MOV</p>
-                    <input type="file" id="inputFile" accept="image/*,video/*" style="display:none;">
+                    <p style="font-size:1.1rem; font-weight:500;">👆 Klik di sini untuk pilih foto</p>
+                    <p style="color:#94a3b8; margin-top:8px; font-size:0.9rem;">Format: JPG, PNG, JPEG</p>
+                    <input type="file" id="inputFile" accept="image/*" style="display:none;">
                 </div>
-                
-                <div id="previewArea" class="hidden">
-                    <h4>Pratinjau:</h4>
-                    <div id="previewContent"></div>
-                    <button type="button" class="btn btn-primary" id="btnSimpan">💾 Simpan File</button>
-                    <p class="tip">📱 Di HP: tahan gambar/video → pilih "Unduh/Gambar"</p>
+
+                <!-- PENGATURAN KOMPRES -->
+                <div id="pengaturanBox" class="settings-box hidden">
+                    <h4>⚙️ Pengaturan Kompres</h4>
+                    <div class="setting-row">
+                        <label>Kualitas: <span id="nilaiKualitas">80%</span></label>
+                        <input type="range" id="sliderKualitas" min="10" max="100" value="80">
+                    </div>
+                    <div class="setting-row">
+                        <label>Maksimal Lebar: <span id="nilaiLebar">1920</span>px</label>
+                        <select id="pilihLebar">
+                            <option value="1280">1280 px (HD)</option>
+                            <option value="1920" selected>1920 px (FHD)</option>
+                            <option value="2560">2560 px (2K)</option>
+                            <option value="0">Ukuran Asli</option>
+                        </select>
+                    </div>
                 </div>
+
+                <!-- HASIL -->
+                <div id="hasilBox" class="hidden">
+                    <div class="size-compare">
+                        <div class="size-item">
+                            <span>Ukuran Asli</span>
+                            <span id="ukuranAsli">—</span>
+                        </div>
+                        <div class="size-item">
+                            <span>Ukuran Setelah</span>
+                            <span id="ukuranHasil">—</span>
+                        </div>
+                        <div class="size-item">
+                            <span>Dihemat</span>
+                            <span id="persenHemat" class="savings">—</span>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin:15px 0 5px;">Pratinjau Hasil:</h4>
+                    <img id="gambarHasil" class="preview-img" alt="Hasil Kompres">
+                    
+                    <button type="button" class="btn btn-success" id="btnSimpan">💾 Simpan Foto</button>
+                    <p style="font-size:0.8rem; color:#9ca3af; margin-top:8px;">📱 Atau tahan gambar → "Simpan Gambar"</p>
+                </div>
+
+                <div id="pesan" class="message"></div>
             </div>
         </div>
 
@@ -236,19 +344,25 @@
             <div class="section-box">
                 <h3 style="margin-bottom:15px;">Download Video & Foto</h3>
                 <input type="text" class="input-field" id="inputLink" placeholder="Tempel tautan TikTok / Instagram di sini...">
-                <button type="button" class="btn btn-primary" id="btnDapatkan">🔗 Buka di Situs Downloader</button>
+                <button type="button" class="btn btn-primary" id="btnDapatkan">🔗 Buka Situs Downloader</button>
                 <div id="msgDownload" class="message info">
-                    💡 Salin tautan video, tempel di atas, lalu klik tombol.<br>
-                    Situs rekomendasi:<br>
-                    • TikTok → <strong>snaptik.app</strong><br>
-                    • Instagram → <strong>snapinsta.app</strong>
+                    💡 Salin tautan video, tempel di atas, lalu klik tombol.<br><br>
+                    • <strong>TikTok</strong> → gunakan snaptik.app<br>
+                    • <strong>Instagram</strong> → gunakan snapinsta.app
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Ganti Tab
+        // === FUNGSI BANTUAN ===
+        function formatUkuran(byte) {
+            if (byte < 1024) return byte + ' B';
+            if (byte < 1024 * 1024) return (byte / 1024).toFixed(1) + ' KB';
+            return (byte / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+
+        // === GANTI TAB ===
         const tabButtons = document.querySelectorAll('.tab-btn');
         tabButtons.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -260,14 +374,24 @@
             });
         });
 
-        // Upload & Preview
+        // === KOMPRES FOTO ===
         const kotakUnggah = document.getElementById('kotakUnggah');
         const inputFile = document.getElementById('inputFile');
-        const previewArea = document.getElementById('previewArea');
-        const previewContent = document.getElementById('previewContent');
+        const pengaturanBox = document.getElementById('pengaturanBox');
+        const hasilBox = document.getElementById('hasilBox');
+        const pesan = document.getElementById('pesan');
+        const sliderKualitas = document.getElementById('sliderKualitas');
+        const nilaiKualitas = document.getElementById('nilaiKualitas');
+        const pilihLebar = document.getElementById('pilihLebar');
+        const ukuranAsli = document.getElementById('ukuranAsli');
+        const ukuranHasil = document.getElementById('ukuranHasil');
+        const persenHemat = document.getElementById('persenHemat');
+        const gambarHasil = document.getElementById('gambarHasil');
         const btnSimpan = document.getElementById('btnSimpan');
-        let fileSaatIni = null;
-        let urlSaatIni = null;
+
+        let fileAsli = null;
+        let blobHasil = null;
+        let namaFileHasil = '';
 
         kotakUnggah.addEventListener('click', () => inputFile.click());
 
@@ -275,78 +399,34 @@
             const file = e.target.files[0];
             if (!file) return;
             
-            fileSaatIni = file;
-            if (urlSaatIni) URL.revokeObjectURL(urlSaatIni);
-            previewContent.innerHTML = '';
-            
-            if (file.type.startsWith('image/')) {
-                const img = document.createElement('img');
-                urlSaatIni = URL.createObjectURL(file);
-                img.src = urlSaatIni;
-                img.className = 'preview-img';
-                previewContent.appendChild(img);
-            } else if (file.type.startsWith('video/')) {
-                const video = document.createElement('video');
-                urlSaatIni = URL.createObjectURL(file);
-                video.src = urlSaatIni;
-                video.controls = true;
-                video.className = 'preview-vid';
-                previewContent.appendChild(video);
-            }
-            
-            previewArea.classList.remove('hidden');
-        });
-
-        // Simpan file - alternatif untuk HP
-        btnSimpan.addEventListener('click', function() {
-            if (!fileSaatIni || !urlSaatIni) return;
-            
-            // Coba cara biasa dulu
-            const a = document.createElement('a');
-            a.href = urlSaatIni;
-            a.download = fileSaatIni.name || 'file';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            
-            // Tampilkan pesan alternatif untuk HP
-            const pesan = document.createElement('div');
-            pesan.className = 'message success show';
-            pesan.innerHTML = '✅ Jika unduh otomatis gagal:<br>👉 <strong>Tahan gambar/video</strong> → pilih <strong>"Simpan Gambar/Video"</strong>';
-            previewContent.appendChild(pesan);
-            
-            setTimeout(() => pesan.remove(), 5000);
-        });
-
-        // Download Sosmed
-        const btnDapatkan = document.getElementById('btnDapatkan');
-        const inputLink = document.getElementById('inputLink');
-        const msgDownload = document.getElementById('msgDownload');
-
-        btnDapatkan.addEventListener('click', function() {
-            const link = inputLink.value.trim();
-            if (!link) {
-                msgDownload.textContent = '⚠️ Masukkan tautan dulu!';
-                msgDownload.className = 'message info show';
+            if (!file.type.startsWith('image/')) {
+                pesan.textContent = '⚠️ Hanya file gambar yang didukung!';
+                pesan.className = 'message error show';
                 return;
             }
             
-            let urlTujuan = '';
-            if (link.includes('tiktok.com')) {
-                urlTujuan = 'https://snaptik.app';
-                msgDownload.innerHTML = '✅ Tautan TikTok terdeteksi!<br>🔗 Buka: <a href="https://snaptik.app" target="_blank" style="color:#60a5fa;">snaptik.app</a><br>Salin tautan di atas, tempel ke Snaptik untuk unduh.';
-            } else if (link.includes('instagram.com')) {
-                urlTujuan = 'https://snapinsta.app';
-                msgDownload.innerHTML = '✅ Tautan Instagram terdeteksi!<br>🔗 Buka: <a href="https://snapinsta.app" target="_blank" style="color:#60a5fa;">snapinsta.app</a><br>Salin tautan di atas, tempel ke Snapinsta untuk unduh.';
-            } else {
-                msgDownload.innerHTML = '⚠️ Tautan tidak dikenali.<br>Gunakan layanan:<br>• TikTok → snaptik.app<br>• Instagram → snapinsta.app';
-                msgDownload.className = 'message info show';
-                return;
-            }
+            fileAsli = file;
+            pesan.classList.remove('show');
+            pengaturanBox.classList.remove('hidden');
+            hasilBox.classList.add('hidden');
             
-            msgDownload.classList.add('show');
-            window.open(urlTujuan, '_blank');
+            ukuranAsli.textContent = formatUkuran(file.size);
+            
+            const img = new Image();
+            img.onload = function() {
+                kompresGambar();
+            };
+            img.src = URL.createObjectURL(file);
         });
-    </script>
-</body>
-</html>
+
+        // Update tampilan nilai
+        sliderKualitas.addEventListener('input', function() {
+            nilaiKualitas.textContent = this.value + '%';
+            if (fileAsli) kompresGambar();
+        });
+        pilihLebar.addEventListener('change', function() {
+            nilaiLebar.textContent = this.value;
+            if (fileAsli) kompresGambar();
+        });
+
+        // PROSES KOMPRES
