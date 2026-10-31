@@ -50,18 +50,7 @@
             z-index: 10;
             padding: 20px 5%;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .user-info {
-            display: none;
-            align-items: center;
-            gap: 12px;
-            color: #93c5fd;
-            font-size: 0.9rem;
-        }
-        .user-info.show {
-            display: flex;
+            justify-content: center;
         }
         .btn {
             padding: 10px 20px;
@@ -78,15 +67,6 @@
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background: rgba(59, 130, 246, 0.15);
-            color: #93c5fd;
-            border: 1px solid rgba(59, 130, 246, 0.25);
-        }
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 0.85rem;
         }
         .container {
             position: relative;
@@ -108,92 +88,6 @@
         }
         .hero p {
             color: #94a3b8;
-        }
-        .auth-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            padding: 20px;
-            display: none;
-        }
-        .auth-modal.show {
-            display: flex;
-        }
-        .auth-card {
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 16px;
-            padding: 30px;
-            width: 100%;
-            max-width: 380px;
-        }
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .auth-tab {
-            flex: 1;
-            padding: 8px;
-            background: transparent;
-            border: 1px solid rgba(59, 130, 246, 0.15);
-            color: #94a3b8;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .auth-tab.active {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
-            color: #fff;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            color: #93c5fd;
-            font-size: 0.85rem;
-            margin-bottom: 6px;
-        }
-        input {
-            width: 100%;
-            padding: 10px 14px;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 6px;
-            color: #fff;
-            font-size: 0.95rem;
-            outline: none;
-        }
-        input:focus {
-            border-color: #3b82f6;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .locked-content {
-            position: relative;
-        }
-        .locked-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px;
-            z-index: 10;
-            gap: 15px;
-            text-align: center;
-            padding: 30px;
-        }
-        .locked-overlay.hidden {
-            display: none;
         }
         .section-box {
             padding: 30px;
@@ -223,6 +117,7 @@
             color: #fff;
             font-size: 0.95rem;
             margin-bottom: 15px;
+            outline: none;
         }
         .tabs-nav {
             display: flex;
@@ -258,13 +153,21 @@
         .message.show {
             display: block;
         }
-        .message.error {
-            background: rgba(239, 68, 68, 0.15);
-            color: #fca5a5;
+        .message.info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
         }
-        .message.success {
-            background: rgba(34, 197, 94, 0.15);
-            color: #86efac;
+        .hidden {
+            display: none !important;
+        }
+        #previewArea {
+            margin-top: 20px;
+        }
+        #previewArea img, #previewArea video {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -272,63 +175,8 @@
     <div class="bg-blob-1"></div>
     <div class="bg-blob-2"></div>
 
-    <!-- MODAL LOGIN/DAFTAR -->
-    <div id="authModal" class="auth-modal">
-        <div class="auth-card">
-            <div style="text-align:center; margin-bottom:20px;">
-                <div class="logo">Xdnry777</div>
-            </div>
-            <div class="auth-tabs">
-                <button type="button" class="auth-tab active" id="tabLogin">Masuk</button>
-                <button type="button" class="auth-tab" id="tabReg">Daftar</button>
-            </div>
-
-            <!-- FORM LOGIN -->
-            <form id="formLogin">
-                <div class="form-group">
-                    <label>Nama Pengguna</label>
-                    <input type="text" id="userLogin" required>
-                </div>
-                <div class="form-group">
-                    <label>Kata Sandi</label>
-                    <input type="password" id="passLogin" required>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:100%;">Masuk</button>
-                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="btnTutupAuth">Kembali</button>
-                <div id="msgLogin" class="message"></div>
-            </form>
-
-            <!-- FORM DAFTAR -->
-            <form id="formReg" class="hidden">
-                <div class="form-group">
-                    <label>Nama Pengguna</label>
-                    <input type="text" id="userReg" required>
-                </div>
-                <div class="form-group">
-                    <label>Kata Sandi</label>
-                    <input type="password" id="passReg" required>
-                </div>
-                <div class="form-group">
-                    <label>Ulangi Kata Sandi</label>
-                    <input type="password" id="passReg2" required>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:100%;">Buat Akun</button>
-                <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;" id="btnKeLogin">Sudah Punya Akun?</button>
-                <div id="msgReg" class="message"></div>
-            </form>
-        </div>
-    </div>
-
-    <!-- HEADER -->
     <header>
         <div class="logo">Xdnry777</div>
-        <div>
-            <div class="user-info" id="infoPengguna">
-                <span id="namaPengguna"></span>
-                <button type="button" class="btn btn-secondary btn-sm" id="btnKeluar">Keluar</button>
-            </div>
-            <button type="button" class="btn btn-primary btn-sm" id="btnBukaAuth">Masuk / Daftar</button>
-        </div>
     </header>
 
     <div class="container">
@@ -337,7 +185,6 @@
             <p>Kompres foto & video tanpa hilang kualitas, unduh video TikTok & Instagram</p>
         </section>
 
-        <!-- TAB NAVIGASI -->
         <div class="tabs-nav">
             <button type="button" class="tab-btn active" data-tab="kompres">Kompres Status</button>
             <button type="button" class="tab-btn" data-tab="download">Download Media</button>
@@ -345,19 +192,18 @@
 
         <!-- TAB KOMPRES -->
         <div class="tab-pane active" id="kompres">
-            <div class="locked-content">
-                <div class="locked-overlay" id="overlayKunci">
-                    <h3>Silakan Masuk Dulu</h3>
-                    <p>Butuh akun untuk pakai fitur ini</p>
-                    <button type="button" class="btn btn-primary" id="btnBukaAuth2">Masuk / Daftar</button>
+            <div class="section-box">
+                <h3 style="margin-bottom:15px;">Unggah Foto atau Video</h3>
+                <div class="upload-area" id="kotakUnggah">
+                    <p>Klik di sini atau seret file ke kotak ini</p>
+                    <input type="file" id="inputFile" accept="image/*,video/*" style="display:none;">
                 </div>
-                <div class="section-box">
-                    <h3 style="margin-bottom:15px;">Unggah Foto atau Video</h3>
-                    <div class="upload-area" id="kotakUnggah">
-                        <p>Klik di sini atau seret file ke kotak ini</p>
-                        <input type="file" id="inputFile" accept="image/*,video/*" style="display:none;">
-                    </div>
-                    <p style="color:#94a3b8; margin-top:10px; font-size:0.9rem;">Format: JPG, PNG, MP4, MOV</p>
+                <p style="color:#94a3b8; margin-top:10px; font-size:0.9rem;">Format: JPG, PNG, MP4, MOV</p>
+                
+                <div id="previewArea" class="hidden">
+                    <h4 style="margin:15px 0 5px;">Pratinjau:</h4>
+                    <div id="previewContent"></div>
+                    <button type="button" class="btn btn-primary" id="btnDownloadFile" style="margin-top:15px;">Simpan File</button>
                 </div>
             </div>
         </div>
@@ -368,63 +214,78 @@
                 <h3 style="margin-bottom:15px;">Download Video & Foto</h3>
                 <input type="text" class="input-field" id="inputLink" placeholder="Tempel tautan TikTok / Instagram di sini...">
                 <button type="button" class="btn btn-primary" id="btnDapatkan">Dapatkan Tautan</button>
-                <div id="msgDownload" class="message"></div>
+                <div id="msgDownload" class="message info">💡 Masukkan tautan lalu klik tombol di atas</div>
             </div>
         </div>
     </div>
 
     <script>
-        const KUNCI_STORAGE = 'xdnry777_akun';
+        // Ganti Tab
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
 
-        // Cek status login
-        function periksaLogin() {
-            const data = JSON.parse(localStorage.getItem(KUNCI_STORAGE) || '{}');
-            if (data.sudahMasuk) {
-                document.getElementById('infoPengguna').classList.add('show');
-                document.getElementById('btnBukaAuth').style.display = 'none';
-                document.getElementById('namaPengguna').textContent = data.nama;
-                document.getElementById('overlayKunci').classList.add('hidden');
-            } else {
-                document.getElementById('infoPengguna').classList.remove('show');
-                document.getElementById('btnBukaAuth').style.display = 'block';
-                document.getElementById('overlayKunci').classList.remove('hidden');
+        // Upload & Preview File
+        const kotakUnggah = document.getElementById('kotakUnggah');
+        const inputFile = document.getElementById('inputFile');
+        const previewArea = document.getElementById('previewArea');
+        const previewContent = document.getElementById('previewContent');
+        const btnDownloadFile = document.getElementById('btnDownloadFile');
+        let fileSaatIni = null;
+
+        kotakUnggah.addEventListener('click', () => inputFile.click());
+
+        inputFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            fileSaatIni = file;
+            previewContent.innerHTML = '';
+            
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                previewContent.appendChild(img);
+            } else if (file.type.startsWith('video/')) {
+                const video = document.createElement('video');
+                video.src = URL.createObjectURL(file);
+                video.controls = true;
+                previewContent.appendChild(video);
             }
-        }
+            
+            previewArea.classList.remove('hidden');
+        });
 
-        // Buka/tutup modal
-        function bukaModalAuth() {
-            document.getElementById('authModal').classList.add('show');
-            resetFormAuth();
-        }
-        function tutupModalAuth() {
-            document.getElementById('authModal').classList.remove('show');
-        }
-        function resetFormAuth() {
-            document.getElementById('formLogin').classList.remove('hidden');
-            document.getElementById('formReg').classList.add('hidden');
-            document.getElementById('tabLogin').classList.add('active');
-            document.getElementById('tabReg').classList.remove('active');
-            document.getElementById('msgLogin').classList.remove('show');
-            document.getElementById('msgReg').classList.remove('show');
-            document.getElementById('formLogin').reset();
-            document.getElementById('formReg').reset();
-        }
+        btnDownloadFile.addEventListener('click', function() {
+            if (!fileSaatIni) return;
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(fileSaatIni);
+            a.download = fileSaatIni.name;
+            a.click();
+        });
 
-        // Ganti tab Login/Daftar
-        document.getElementById('tabLogin').addEventListener('click', function() {
-            this.classList.add('active');
-            document.getElementById('tabReg').classList.remove('active');
-            document.getElementById('formLogin').classList.remove('hidden');
-            document.getElementById('formReg').classList.add('hidden');
+        // Download Sosmed
+        const btnDapatkan = document.getElementById('btnDapatkan');
+        const inputLink = document.getElementById('inputLink');
+        const msgDownload = document.getElementById('msgDownload');
+
+        btnDapatkan.addEventListener('click', function() {
+            const link = inputLink.value.trim();
+            if (!link) {
+                msgDownload.textContent = '⚠️ Silakan masukkan tautan terlebih dahulu!';
+                msgDownload.classList.add('show');
+                return;
+            }
+            msgDownload.innerHTML = '✅ Tautan diterima.<br>⚠️ Fitur unduh langsung membutuhkan server khusus. Gunakan layanan seperti snaptik.app untuk TikTok atau inflact.com untuk Instagram.<br>🔗 Tautan kamu: <a href="'+link+'" target="_blank" style="color:#60a5fa; word-break:break-all;">'+link+'</a>';
+            msgDownload.classList.add('show');
         });
-        document.getElementById('tabReg').addEventListener('click', function() {
-            this.classList.add('active');
-            document.getElementById('tabLogin').classList.remove('active');
-            document.getElementById('formReg').classList.remove('hidden');
-            document.getElementById('formLogin').classList.add('hidden');
-        });
-        document.getElementById('btnKeLogin').addEventListener('click', function() {
-            resetFormAuth();
-        });
-        document.getElementById('btnTutupAuth').addEventListener('click', tut
-                    
+    </script>
+</body>
+</html>
